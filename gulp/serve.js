@@ -7,7 +7,7 @@ var url         = require('url');
 var proxy       = require('proxy-middleware');
 var paths       = gulp.paths;
 
-gulp.task('serve', function() {
+gulp.task('serve', ['cjsx'], function() {
   var proxyOptions = url.parse('http://docker:8080');
   proxyOptions.route = '/api';
 
