@@ -1,0 +1,31 @@
+{
+  "name": "react-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "browserify": "^11.0.1",
+    "coffee-react": "^4.0.0",
+    "gulp": "^3.9.0",
+    "gulp-cjsx": "^3.0.0",
+    "gutil": "^1.6.4",
+    "proxy-middleware": "^0.13.1",
+    "require-dir": "^0.3.0",
+    "url": "^0.10.3"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrunoDF/react-poc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrunoDF/react-poc/issues"
+  },
+  "homepage": "https://github.com/BrunoDF/react-poc#readme"
+}

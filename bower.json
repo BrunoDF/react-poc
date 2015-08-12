@@ -1,0 +1,20 @@
+{
+  "name": "react-poc",
+  "version": "0.0.0",
+  "homepage": "https://github.com/BrunoDF/react-poc",
+  "authors": [
+    "Bruno Fachine <bdfachine@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.13.3",
+    "jquery": "~2.1.4"
+  }
+}
