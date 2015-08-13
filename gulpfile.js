@@ -3,14 +3,15 @@
 var gulp = require('gulp');
 
 gulp.paths = {
-  serve : '.',
-  src   : './components/*/scripts/**.cjsx',
-  dev   : './dev',
-  devFiles : './dev/**/*.js'
+  serve      : ['./bower_components', './build'],
+  cjsxSrc    : './src/**/*.cjsx',
+  htmlSrc    : './src/*.html',
+  build      : './build',
+  buildFiles : './build/**/*'
 }
 
 require('require-dir')('./gulp');
 
 gulp.task('default', function() {
-  gulp.start('cjsx');
+  gulp.start('serve');
 });

@@ -2,35 +2,94 @@
 
 # React = require('react')
 
+###################################
+## Styles
+###################################
+styles =
+  caret:
+    display: 'inline-block'
+    borderTop: '4px solid #000'
+    borderRight: '4px solid transparent'
+    borderLeft: '4px solid transparent'
+    borderTopColor: '#999'
+    borderBottomColor: '#999'
+    height: '0'
+    margin: '8px 0 0 6px'
+    verticalAlign: 'top'
+    width: '0'
+
+  notification:
+    background : '#000000'
+    color      : '#FFFFFF'
+    float      : 'left'
+    lineHeight : '20px'
+    padding    : '10px 10px 11px'
+    position   : 'relative'
+    textShadow : '0 1px 0 #333'
+
+  iconInbox:
+    backgroundImage    : 'url("http://office-sp.dclick.com.br/sesc-guideline/releases/2.2.0/img/glyphicons-halflings-white.png")'
+    backgroundPosition : '-168px -24px'
+    backgroundRepeat   : 'no-repeat'
+    display            : 'inline-block'
+    height             : '14px'
+    lineHeight         : '14px'
+    marginTop          : '1px'
+    verticalAlign      : 'text-top'
+    width              : '14px'
+
+  unreadCount:
+    background   : '#9d261d'
+    borderRadius : '10px'
+    bottom       : '-5px'
+    boxShadow    : '0 2px 2px rgba(0,0,0,.5)'
+    color        : '#F7F7F7'
+    display      : 'inline-block'
+    fontSize     : '9px'
+    fontWeight   : '700'
+    left         : '50%'
+    lineHeight   : '15px'
+    marginLeft   : '-12px'
+    padding      : '0 5px 1px 5px'
+    position     : 'absolute'
+    textAlign    : 'center'
+    width        : '15px'
+    zIndex       : '1001'
+
+  notificationList:
+    color: '#FFFFFF'
+
+
+
+###################################
+## JS
+###################################
 Notification = React.createClass
   render: () ->
-    <div className="notification notification-center">
-      <NotificationToggle />
+    <div style={styles.notification}>
+      <i style={styles.iconInbox}></i>
+      <NotificationUnreadCount />
+      <b style={styles.caret}></b>
     </div>
 
-NotificationToggle = React.createClass
-  render: () ->
-    <span className="notification-toggle">
-      <NotificationUnreadCount />
-    </span>
+# NotificationToggle = React.createClass
+#   render: () ->
+#     <span className="notification-toggle">
+#       <i style={styles.iconInbox} />
+#       <NotificationUnreadCount />
+#     </span>
 
 NotificationUnreadCount = React.createClass
   render: () ->
-    <span className="notification-counter">2</span>
+    <span style={styles.unreadCount}>2</span>
 
 React.render <Notification />, document.body
+
+
+
 # $.get('/api/notificacoes/naolidas').then((result) ->
 #   console.log result
 # )
-
-# var styles = {
-#   unread: {
-#     color: '#FFF'
-#   }
-#   // notificationList: {
-
-#   // }
-# }
 
 
 # var Notifications = React.createClass({
