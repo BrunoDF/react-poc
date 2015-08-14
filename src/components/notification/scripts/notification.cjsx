@@ -6,6 +6,16 @@
 ## Styles
 ###################################
 styles =
+  notificationComponent:
+    background : '#000000'
+    color      : '#FFFFFF'
+    float      : 'right'
+    fontSize   : '14px'
+    lineHeight : '20px'
+    padding    : '10px 10px 11px'
+    position   : 'relative'
+    textShadow : '0 1px 0 #333'
+
   caret:
     display: 'inline-block'
     borderTop: '4px solid #000'
@@ -17,15 +27,6 @@ styles =
     margin: '8px 0 0 6px'
     verticalAlign: 'top'
     width: '0'
-
-  notification:
-    background : '#000000'
-    color      : '#FFFFFF'
-    float      : 'left'
-    lineHeight : '20px'
-    padding    : '10px 10px 11px'
-    position   : 'relative'
-    textShadow : '0 1px 0 #333'
 
   iconInbox:
     backgroundImage    : 'url("http://office-sp.dclick.com.br/sesc-guideline/releases/2.2.0/img/glyphicons-halflings-white.png")'
@@ -56,34 +57,183 @@ styles =
     width        : '15px'
     zIndex       : '1001'
 
-  notificationList:
-    color: '#FFFFFF'
+  notificationsList:
+    background     : '#FFFFFF'
+    backgroundClip : 'padding-box'
+    border         : '1px solid #ccc'
+    border         : '1px solid rgba(0,0,0,.2)'
+    borderRadius   : '5px'
+    boxShadow      : '0 5px 10px 2px rgba(0,0,0,.5)'
+    color          : '#333333'
+    float          : 'left'
+    left           : 'auto'
+    listStyle      : 'none'
+    margin         : '1px 0 0'
+    minWidth       : '360px'
+    padding        : '4px 0'
+    position       : 'absolute'
+    right          : '0'
+    textShadow     : 'none'
+    top            : '100%'
+    zIndex         : '10002'
+
+  notificationsListHeader:
+    borderBottom : '1px solid #DDD'
+    color        : '#111'
+    padding      : '2px 10px 5px 10px'
+
+  notificationsListHeaderTitle:
+    fontSize     : '12px'
+    fontWeight   : '700'
+
+  notificationsListHeaderAllNotifications:
+    float    : 'right'
+    fontSize : '11px'
+    margin   : '1px 0 0 0'
+
+  notificationsListNotifications:
+    maxWidth  : '380px'
+    maxHeight : '400px'
+    overflow  : 'auto'
+    position  : 'relative'
+
+  notificationBlock:
+    borderBottom : '1px solid #e6e6e6'
+    cursor       : 'pointer'
+    display      : 'block'
+    left         : '0'
+    maxWidth     : '360px'
+    position     : 'relative'
+    padding      : '10px'
+    transition   : 'background-color 1000ms linear'
+    whiteSpace   : 'normal'
+    wordWrap     : 'break-word'
+
+  notificationDate: # Adicionar troca de visual - Radium
+    borderRadius : '0 0 4px 4px'
+    fontSize     : '9px'
+    fontWeight   : '700'
+    opacity      : '0'
+    padding      : '2px 6px'
+    position     : 'absolute'
+    right        : '10px'
+    textShadow   : '0 1px 1px #FFF'
+    top          : '-1px'
+    transition   : 'all 1000ms linear'
+
+  notificationTitle:
+    color      : '#666'
+    fontSize   : '11px'
+    fontWeight : '700'
+    lineHeight : '1.4em'
+    margin     : '0'
+
+  notificationText:
+    color      : '#666'
+    fontSize   : '11px'
+    lineHeight : '1.4em'
+    margin     : '0'
 
 
 
 ###################################
 ## JS
 ###################################
-Notification = React.createClass
+NotificationComponent = React.createClass
+  getInitialState: () ->
+    return {
+      collapsed           : yes
+      unreadNotifications : []
+      unreadCount         : 0
+    }
+
+  clickHandler: () ->
+    @setState({
+      collapsed : !@state.collapsed
+    })
+
+    if !@state.collapsed
+      @markAsRead()
+
+  markAsRead: () ->
+    ids = []
+    for unreadNotification in @state.unreadNotifications
+      ids.push unreadNotification.id
+
+    $.ajax(
+      type: 'POST'
+      url: 'http://localhost:3000/api/notificacoes/notificarleitura'
+      contentType: 'application/json'
+      data: JSON.stringify {ids: ids}
+      dataType: 'json'
+    )#.then (result) =>
+      # @setState({
+      #   unreadNotifications : []
+      # })
+
+  getUnread: () ->
+    $.get 'http://localhost:3000/api/notificacoes/naolidas', (result) =>
+      @setState({
+        unreadNotifications: result
+        unreadCount: result.length
+      })
+
+  componentDidMount: () ->
+    @getUnread()
+    setInterval(@getUnread, @props.interval)
+    # window.addEventListener('mousedown', () =>
+    #     @clickHandler() unless @state.collapsed
+    #   , false)
+
   render: () ->
-    <div style={styles.notification}>
+    <div style={styles.notificationComponent} onClick={@clickHandler}>
       <i style={styles.iconInbox}></i>
-      <NotificationUnreadCount />
+      <NotificationUnreadCount unreadCount={@state.unreadCount} />
       <b style={styles.caret}></b>
+      <NotificationsList collapsed={@state.collapsed} unreadNotifications={@state.unreadNotifications} />
     </div>
 
-# NotificationToggle = React.createClass
-#   render: () ->
-#     <span className="notification-toggle">
-#       <i style={styles.iconInbox} />
-#       <NotificationUnreadCount />
-#     </span>
 
 NotificationUnreadCount = React.createClass
   render: () ->
-    <span style={styles.unreadCount}>2</span>
+    <span style={styles.unreadCount}>{@props.unreadCount}</span>
 
-React.render <Notification />, document.body
+
+NotificationsList = React.createClass
+  render: () ->
+    if !@props.collapsed
+      template =
+        <div style={styles.notificationsList}>
+          <div style={styles.notificationsListHeader}>
+            <span style={styles.notificationsListHeaderTitle}>Notificações</span>
+            <span style={styles.notificationsListHeaderAllNotifications}>Central de notificações</span>
+          </div>
+          <div style={styles.notificationsListNotifications}>
+            {@props.unreadNotifications.map (notification, i) ->
+              return <Notification key={i} data={notification} />
+            }
+          </div>
+        </div>
+    else
+      template = null
+
+
+Notification = React.createClass
+  render: () ->
+    <div style={styles.notificationBlock}>
+      <small style={styles.notificationDate}>{@props.data.data}</small>
+      <p style={styles.notificationTitle}>{@props.data.tipo}</p>
+      <p style={styles.notificationText}>{@props.data.texto}</p>
+    </div>
+
+# <div className="notifications">
+#   {this.props.unreadNotifications.map (notification, i) ->
+#     return <Notification key={i} title={notification.tipo} content={notification.texto} />
+#   }
+# </div>
+
+## Render Component
+React.render <NotificationComponent interval="5000" />, document.body
 
 
 
@@ -167,23 +317,7 @@ React.render <Notification />, document.body
 #     }
 #   });
 
-#   var NotificationsList = React.createClass({
-#     render: function() {
-#       return (
-#         <div className="notifications-menu dropdown-menu">
-#           <div className="header">
-#             <a href="#" className="all-notifications">Central de notificações</a>
-#             <span className="header-title">Notificações</span>
-#           </div>
-#           <div className="notifications">
-#             {this.props.unreadNotifications.map(function(notification, i) {
-#               return <Notification key={i} title={notification.tipo} content={notification.texto} />
-#             })}
-#           </div>
-#         </div>
-#       )
-#     }
-#   });
+
 
 #   var Notification = React.createClass({
 #     render: function() {
