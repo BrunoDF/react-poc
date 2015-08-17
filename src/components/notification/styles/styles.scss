@@ -1,0 +1,141 @@
+.notification-component {
+  background  : #000000;
+  color       : #FFFFFF;
+  float       : right;
+  font-size   : 14px;
+  font-family : 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height : 20px;
+  padding     : 10px 10px 11px;
+  position    : relative;
+  text-shadow : 0 1px 0 #333;
+
+  .icon-inbox {
+    background-image    : url("http://office-sp.dclick.com.br/sesc-guideline/releases/2.2.0/img/glyphicons-halflings-white.png");
+    background-position : -168px -24px;
+    background-repeat   : no-repeat;
+    display             : inline-block;
+    height              : 14px;
+    line-height         : 14px;
+    margin-top          : 1px;
+    vertical-align      : text-top;
+    width               : 14px;
+  }
+
+  .caret {
+    display             : inline-block;
+    border-top          : 4px solid #000;
+    border-right        : 4px solid transparent;
+    border-left         : 4px solid transparent;
+    border-top-color    : #999;
+    border-bottom-color : #999;
+    height              : 0;
+    margin              : 8px 0 0 6px;
+    vertical-align      : top;
+    width               : 0;
+  }
+
+  .unread-count {
+    background    : #9d261d;
+    border-radius : 10px;
+    bottom        : -5px;
+    box-shadow    : 0 2px 2px rgba(0,0,0,.5);
+    color         : #F7F7F7;
+    display       : inline-block;
+    font-size     : 9px;
+    font-weight   : 700;
+    left          : 50%;
+    line-height   : 15px;
+    margin-left   : -12px;
+    padding       : 0 5px 1px 5px;
+    position      : absolute;
+    text-align    : center;
+    width         : 15px;
+    z-index       : 1001;
+  }
+
+  .notification-list {
+    background      : #FFFFFF;
+    background-clip : padding-box;
+    border          : 1px solid #ccc;
+    border          : 1px solid rgba(0,0,0,.2);
+    border-radius   : 5px;
+    box-shadow      : 0 5px 10px 2px rgba(0,0,0,.5);
+    color           : #333333;
+    float           : left;
+    left            : auto;
+    list-style      : none;
+    margin          : 1px 0 0;
+    min-width       : 360px;
+    padding         : 4px 0;
+    position        : absolute;
+    right           : 0;
+    text-shadow     : none;
+    top             : 100%;
+    z-index         : 10002;
+
+    .header {
+      border-bottom : 1px solid #DDD;
+      color         : #111;
+      padding       : 2px 10px 5px 10px;
+
+      .title {
+        font-size   : 12px;
+        font-weight : 700;
+      }
+
+      .all-notifications {
+        float     : right;
+        font-size : 11px;
+        margin    : 1px 0 0 0;
+      }
+    }
+
+    .notifications {
+      max-width  : 380px;
+      max-height : 400px;
+      overflow   : auto;
+      position   : relative;
+    }
+
+    .notification {
+      border-bottom : 1px solid #e6e6e6;
+      cursor        : pointer;
+      display       : block;
+      left          : 0;
+      max-width     : 360px;
+      position      : relative;
+      padding       : 10px;
+      transition    : background-color 1000ms linear;
+      white-space   : normal;
+      word-wrap     : break-word;
+
+      .date {
+        border-radius : 0 0 4px 4px;
+        font-size     : 9px;
+        font-weight   : 700;
+        opacity       : 0;
+        padding       : 2px 6px;
+        position      : absolute;
+        right         : 10px;
+        text-shadow   : 0 1px 1px #FFF;
+        top           : -1px;
+        transition    : all 1000ms linear;
+      }
+
+      .title {
+        color       : #666;
+        font-size   : 11px;
+        font-weight : 700;
+        line-height : 1.4em;
+        margin      : 0;
+      }
+
+      .text {
+        color       : #666;
+        font-size   : 11px;
+        line-height : 1.4em;
+        margin      : 0;
+      }
+    }
+  }
+}

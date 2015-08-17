@@ -7,7 +7,7 @@ var url         = require('url');
 var proxy       = require('proxy-middleware');
 var paths       = gulp.paths;
 
-gulp.task('serve', ['cjsx', 'html'], function() {
+gulp.task('serve', ['cjsx', 'sass', 'html'], function() {
   var proxyOptions = url.parse('http://docker:8080');
   proxyOptions.route = '/api';
 
@@ -24,7 +24,8 @@ gulp.task('serve', ['cjsx', 'html'], function() {
     }
   });
 
-  gulp.watch(paths.cjsxSrc, ['cjsx'])
-  gulp.watch(paths.htmlSrc, ['html'])
-  gulp.watch(paths.buildFiles).on('change', browserSync.reload)
+  gulp.watch(paths.cjsxSrc, ['cjsx']);
+  gulp.watch(paths.sassSrc, ['sass']);
+  gulp.watch(paths.htmlSrc, ['html']);
+  gulp.watch(paths.buildFiles).on('change', browserSync.reload);
 });

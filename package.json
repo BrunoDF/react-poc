@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
-  "dependencies": {
-    "radium": "^0.13.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^2.8.2",
     "browserify": "^11.0.1",
     "coffee-react": "^4.0.0",
     "gulp": "^3.9.0",
     "gulp-cjsx": "^3.0.0",
+    "gulp-sass": "^2.0.4",
     "gutil": "^1.6.4",
     "proxy-middleware": "^0.13.1",
     "require-dir": "^0.3.0",
