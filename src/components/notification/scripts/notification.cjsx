@@ -47,7 +47,13 @@ NotificationComponent = React.createClass
       @getUnread()
 
   getUnread: () ->
-    $.get 'http://localhost:3000/api/notificacoes/naolidas', (result) =>
+    $.ajax(
+      type: 'GET'
+      timeout: @props.interval
+      url: 'http://localhost:3000/api/notificacoes/naolidas'
+      contentType: 'application/json'
+      dataType: 'json'
+    ).then (result) =>
       @setState({
         unreadNotifications: result
         unreadCount: result.length
@@ -70,6 +76,15 @@ NotificationComponent = React.createClass
 
 
 NotificationUnreadCount = React.createClass
+  componentDidMount: () ->
+    $(@getDOMNode()).addClass('show') if @props.unreadCount
+
+  componentDidUpdate: () ->
+    if @props.unreadCount
+      $(@getDOMNode()).addClass('show')
+    else
+      $(@getDOMNode()).removeClass('show')
+
   render: () ->
     <span className="unread-count">{@props.unreadCount}</span>
 
@@ -94,9 +109,22 @@ NotificationsList = React.createClass
 
 
 Notification = React.createClass
+  componentDidMount: () ->
+    $(@getDOMNode()).addClass('unread')
+
+    setTimeout () =>
+        $(@getDOMNode()).removeClass('unread')
+      , 1000
+
+  getDateDifferenceInMinutes: () ->
+    currentDate      = new Date()
+    notificationDate = new Date(@props.data.data)
+    difference       = Math.floor ((currentDate - notificationDate) / (1000*60)) % 60 # Em minutos
+    return difference
+
   render: () ->
     <div className="notification">
-      <small className="date">{@props.data.data}</small>
+      <small className="date">{@getDateDifferenceInMinutes() + ' minutos atrás'}</small>
       <p className="title">{@props.data.tipo}</p>
       <p className="text">{@props.data.texto}</p>
     </div>

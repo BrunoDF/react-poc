@@ -11,9 +11,9 @@ gulp.task('serve', ['cjsx', 'sass', 'html'], function() {
   var proxyOptions = url.parse('http://docker:8080');
   proxyOptions.route = '/api';
 
-  var routes = {
-    '/bower_components' : 'bower_components'
-  }
+  // var routes = {
+  //   '/bower_components' : 'bower_components'
+  // }
 
   browserSync.init({
     startPath: '/',

@@ -46,11 +46,18 @@
     left          : 50%;
     line-height   : 15px;
     margin-left   : -12px;
+    opacity       : 0;
     padding       : 0 5px 1px 5px;
     position      : absolute;
     text-align    : center;
     width         : 15px;
     z-index       : 1001;
+
+    transition: opacity 0.3s ease-in-out;
+
+    &.show {
+      opacity : 1
+    }
   }
 
   .notification-list {
@@ -109,10 +116,24 @@
       white-space   : normal;
       word-wrap     : break-word;
 
+      &:last-child {
+        border-bottom : 0;
+      }
+
+      &.unread {
+        background-color : #fff0c0;
+
+        .date {
+          opacity : 1;
+        }
+      }
+
       .date {
+        background    : #ffdd73;
         border-radius : 0 0 4px 4px;
         font-size     : 9px;
         font-weight   : 700;
+        line-height   : 12px;
         opacity       : 0;
         padding       : 2px 6px;
         position      : absolute;
